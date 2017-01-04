@@ -1,0 +1,41 @@
+<div class="simon-board">
+  <button id="btn-1" class="simon-btn simon-btn__green" disabled={{isPlayingSequence}} {{action "didChoose" 1}}>
+    Green
+  </button>
+  <button id="btn-2" class="simon-btn simon-btn__yellow" disabled={{isPlayingSequence}} {{action "didChoose" 2}}>
+    Yellow
+  </button>
+  <button id="btn-3" class="simon-btn simon-btn__blue" disabled={{isPlayingSequence}} {{action "didChoose" 3}}>
+    Blue
+  </button>
+  <button id="btn-4" class="simon-btn simon-btn__red" disabled={{isPlayingSequence}} {{action "didChoose" 4}}>
+    Red
+  </button>
+</div>
+
+{{#if isPlayingSequence}}
+  <h1>Memorize the sequence</h1>
+{{/if}}
+
+{{#unless isPlaying}}
+  <button {{action "newGame"}}>START NEW GAME</button>
+{{/unless}}
+
+{{#if gameOver}}
+  <div class="game-over">
+    <strong>Game Over</strong>
+    <p>
+      Sequence: {{sequence}}
+    </p>
+    <p>
+      Error index: {{simon.currentIndex}}
+    </p>
+  </div>
+{{/if}}
+
+{{#if isPlaying}}
+  <p>Current sequence</p>
+  {{#each simon.sequence as |value|}}
+    {{value}} -
+  {{/each}}
+{{/if}}

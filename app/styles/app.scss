@@ -1,0 +1,91 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  background-color: #222;
+  text-align: center;
+}
+
+header {
+  width: 100;
+  height: 50px;
+  background-color: rgba(255,255,255,.1);
+
+  h1 {
+    margin: 0;
+    text-align: center;
+    line-height: 50px;
+    text-shadow: 1px 1px 1px rgba(0,0,0,.5);
+  }
+}
+
+main {
+  height: calc(100vh - 50px);
+}
+
+.simon-board {
+  margin: 100px 40px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+  .simon-btn {
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+}
+
+.game-over {
+  border: solid 2px #a51313;
+  background-color: #ff3333;
+  margin: 10px;
+  padding: 10px 15px;
+  color: #fff;
+}
+
+.simon-btn {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  box-shadow: 0px 0px 0px 2px rgba(255,255,255,.7) inset, 0 0 5px 1px rgba(0,0,0,.2);
+  border: solid 1px #999;
+  border-radius: 5px;
+  color: #fff;
+  text-shadow: 1px 1px 1px rgba(0,0,0,.5);
+
+  &__green {
+    background-color: #1a771a;
+  }
+
+  &__yellow {
+    background-color: #e4e436;
+  }
+
+  &__blue {
+    background-color: #2b57bd;
+  }
+
+  &__red {
+    background-color: #e62020;
+  }
+
+  &__active {
+    animation: active-button .6s;
+  }
+}
+
+@keyframes active-button {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .2;
+  }
+  100% {
+    opacity: 1;
+  }
+}
