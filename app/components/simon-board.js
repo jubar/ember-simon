@@ -1,10 +1,11 @@
 /*jshint loopfunc: true */
 import Ember from 'ember';
 import { task, timeout } from 'ember-concurrency';
+import { EKMixin, getCode, keyDown } from 'ember-keyboard';
 
 const { Component, inject: { service }, computed, observer } = Ember;
 
-export default Component.extend({
+export default Component.extend(EKMixin, {
   simon: service(),
   isPlayingSequence: false,
   isPlaying: computed.alias('simon.isPlaying'),
@@ -35,6 +36,10 @@ export default Component.extend({
   }).drop(),
 
   animateMovement: task(function * (value) {
+    if (this.get('isPlayingSequence')) {
+      return;
+    }
+
     let animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
 
     Ember.$(`#btn-${value}`)
@@ -44,11 +49,43 @@ export default Component.extend({
       });
     yield timeout(500);
     this.get('simon').checkMovement(value);
-  }).restartable(),
+  }).enqueue(),
 
   didSequenceChange: observer('simon.sequence.[]', function() {
     this.get('playSequence').perform();
   }),
+
+  move: Ember.on(
+    keyDown('KeyH'),
+    keyDown('KeyJ'),
+    keyDown('KeyK'),
+    keyDown('KeyL'),
+    keyDown('Enter'),
+    function(e) {
+      switch (getCode(e)) {
+        case 'KeyH':
+          this.get('animateMovement').perform(1);
+          break;
+        case 'KeyJ':
+          this.get('animateMovement').perform(2);
+          break;
+        case 'KeyK':
+          this.get('animateMovement').perform(3);
+          break;
+        case 'KeyL':
+          this.get('animateMovement').perform(4);
+          break;
+        case 'Enter':
+          this.get('simon').newGame();
+          break;
+      }
+    }
+  ),
+
+  init() {
+    this._super(...arguments);
+    this.set('keyboardActivated', true);
+  },
 
   actions: {
     newGame() {

@@ -1,15 +1,15 @@
 <div class="simon-board">
   <div id="btn-1" class="simon-btn simon-btn__green" disabled={{isPlayingSequence}} {{action "didChoose" 1}}>
-    Green
+    H
   </div>
   <div id="btn-2" class="simon-btn simon-btn__yellow" disabled={{isPlayingSequence}} {{action "didChoose" 2}}>
-    Yellow
+    J
   </div>
   <div id="btn-3" class="simon-btn simon-btn__blue" disabled={{isPlayingSequence}} {{action "didChoose" 3}}>
-    Blue
+    K
   </div>
   <div id="btn-4" class="simon-btn simon-btn__red" disabled={{isPlayingSequence}} {{action "didChoose" 4}}>
-    Red
+    L
   </div>
 </div>
 
@@ -18,7 +18,7 @@
 {{/if}}
 
 {{#unless isPlaying}}
-  <button {{action "newGame"}}>START NEW GAME</button>
+  <button {{action "newGame"}}>START NEW GAME (ENTER)</button>
 {{/unless}}
 
 {{#if gameOver}}
