@@ -14,19 +14,20 @@ export default Component.extend({
   playSequence: task(function * () {
     this.set('isPlayingSequence', true);
     // Wait some milliseconds before to start the new sequence
-    yield timeout(500);
+    yield timeout(800);
     let index = 0;
     let endsAt = this.get('sequence.length') - 1;
     let animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
 
     while (index <= endsAt) {
       let currentValue = this.get('sequence').objectAt(index);
-      this.$(`#btn-${currentValue}`)
+
+      Ember.$(`#btn-${currentValue}`)
         .addClass('simon-btn__active')
-        .one(animationEnd, () => {
+        .one(animationEnd, function() {
           Ember.$(`#btn-${currentValue}`).removeClass('simon-btn__active');
         });
-      yield timeout(700);
+      yield timeout(500);
       index++;
     }
 
@@ -38,10 +39,10 @@ export default Component.extend({
 
     Ember.$(`#btn-${value}`)
       .addClass('simon-btn__active')
-      .one(animationEnd, () => {
+      .one(animationEnd, function() {
         Ember.$(`#btn-${value}`).removeClass('simon-btn__active');
       });
-    yield timeout(700);
+    yield timeout(500);
     this.get('simon').checkMovement(value);
   }).restartable(),
 
