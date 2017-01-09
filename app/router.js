@@ -8,6 +8,8 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('play');
+  this.route('play-sequence');
+  this.route('game-over');
 });
 
 export default Router;
