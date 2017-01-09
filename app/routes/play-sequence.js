@@ -7,8 +7,7 @@ export default Route.extend({
 
   beforeModel() {
     if (!this.get('simon.isPlaying')) {
-      this.get('simon').newGame();
-      this.transitionTo('play-sequence');
+      this.transitionTo('play');
     }
   }
 });

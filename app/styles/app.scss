@@ -8,10 +8,15 @@ html, body {
   text-align: center;
 }
 
+body {
+  background-image: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)),
+    url('/images/bg.jpg');
+  background-size: cover;
+}
+
 header {
   width: 100;
   height: 50px;
-  background-color: rgba(255,255,255,.1);
 
   h1 {
     margin: 0;
@@ -26,12 +31,12 @@ main {
 }
 
 .simon-board {
-  margin: 100px 40px;
+  height: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
 
   .simon-btn {
     flex-grow: 1;
@@ -40,39 +45,37 @@ main {
 }
 
 .game-over {
-  border: solid 2px #a51313;
-  background-color: #ff3333;
+  border: solid 2px rgba(165, 19, 19, 0.6);
+  background-color: rgba(255, 51, 51, 0.4);
   margin: 10px;
   padding: 10px 15px;
   color: #fff;
 }
 
 .simon-btn {
-  width: 100px;
   height: 100px;
   line-height: 100px;
   font-size: 20px;
-  margin: 10px;
-  box-shadow: 0px 0px 0px 2px rgba(255,255,255,.7) inset, 0 0 5px 1px rgba(0,0,0,.2);
-  border: solid 1px #999;
-  border-radius: 5px;
+
   color: #fff;
   text-shadow: 1px 1px 1px rgba(0,0,0,.5);
+  border-top: solid 10px rgba(255,255,255,.2);
+  opacity: .7;
 
   &__green {
-    background-color: #1a771a;
+    background-color: #c6d40c;
   }
 
   &__yellow {
-    background-color: #e4e436;
+    background-color: #fec526;
   }
 
   &__blue {
-    background-color: #2b57bd;
+    background-color: #3faacc;
   }
 
   &__red {
-    background-color: #e62020;
+    background-color: #c62b2f;
   }
 
   &__active {
@@ -82,12 +85,15 @@ main {
 
 @keyframes active-button {
   0% {
-    opacity: 1;
+    opacity: .8;
+    box-shadow: 0 0px 0px 0px rgba(255,255,255, 0);
   }
   50% {
-    opacity: .2;
+    opacity: 1;
+    box-shadow: 0 -20px 100px 20px rgba(255,255,255, 0.1);
   }
   100% {
-    opacity: 1;
+    opacity: .8;
+    box-shadow: 0 0px 0px 0px rgba(255,255,255, 0);
   }
 }

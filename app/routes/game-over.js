@@ -6,8 +6,7 @@ export default Route.extend({
   simon: service(),
 
   beforeModel() {
-    if (!this.get('simon.isPlaying')) {
-      this.get('simon').newGame();
+    if (this.get('simon.isPlaying')) {
       this.transitionTo('play-sequence');
     }
   }
