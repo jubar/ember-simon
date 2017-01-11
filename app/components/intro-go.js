@@ -13,25 +13,26 @@ export default Component.extend({
     let i = 0;
     let endsAt = this.get('steps').length - 1;
     let animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+    let animElement = Ember.$('.steps');
 
     while(i <= endsAt) {
       let currentValue = this.get('steps').objectAt(i);
       this.set('value', currentValue);
 
-      Ember.$('.steps').removeClass('hide').addClass('zoomInDown')
+      animElement.removeClass('hide').addClass('zoomInDown')
         .one(animationEnd, () => {
-          Ember.$('.steps').removeClass('zoomInDown');
+          animElement.removeClass('zoomInDown');
           if (i < endsAt) {
-            Ember.$('.steps').addClass('hide');
+            animElement.addClass('hide');
           }
         });
       yield timeout(1300);
       i++;
     }
 
-    Ember.$('.steps').addClass('bounceOut go')
+    animElement.addClass('bounceOut go')
       .one(animationEnd, () => {
-        Ember.$('.steps').removeClass('zoomInDown bounceOut go').addClass('hide');
+        animElement.removeClass('zoomInDown bounceOut go').addClass('hide');
       });
 
     yield timeout(600);

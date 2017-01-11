@@ -19,12 +19,15 @@ export default Component.extend({
 
     while (index <= endsAt) {
       let currentValue = this.get('sequence').objectAt(index);
+      let animElement = Ember.$(`#btn-${currentValue}`);
 
-      Ember.$(`#btn-${currentValue}`)
-        .addClass('simon-btn__active')
-        .one(animationEnd, function() {
-          Ember.$(`#btn-${currentValue}`).removeClass('simon-btn__active');
+      Ember.$('body').addClass(`color-${currentValue}`);
+      animElement.addClass('simon-btn__active')
+        .one(animationEnd, () => {
+          animElement.removeClass('simon-btn__active');
+          Ember.$('body').removeClass(`color-${currentValue}`);
         });
+
       yield timeout(500);
       index++;
     }
