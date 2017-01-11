@@ -2,5 +2,12 @@
   <h1>Simon says... Ember</h1>
 </header>
 <main>
+  {{log pills}}
+  {{#each pills as |pill|}}
+    {{component
+      'magic-pill'
+      pill=pill
+    }}
+  {{/each}}
   {{outlet}}
 </main>

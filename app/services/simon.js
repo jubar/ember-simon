@@ -7,6 +7,22 @@ export default Service.extend({
   isGameOver: false,
   currentIndex: 0,
   sequence: Ember.A(),
+  pills: Ember.A(),
+
+  createPill() {
+    console.log('Pills');
+    this.get('pills').pushObject({
+      letter: 'A',
+      posX: '75',
+      posY: '80',
+      speed: 500
+    });
+    console.log(this.get('pills'));
+  },
+
+  destroyPill() {
+    this.set('pills', Ember.A());
+  },
 
   getNewValue() {
     // TODO: Research a better way to generate random values.
@@ -45,6 +61,8 @@ export default Service.extend({
       isGameOver: false,
       sequence: Ember.A([this.getNewValue()])
     });
+
+    this.createPill();
   },
 
 });
