@@ -7,11 +7,12 @@ const { Component, inject: { service }, computed } = Ember;
 export default Component.extend({
   tagName: '',
   simon: service(),
+  showIntro: false,
   sequence: computed.alias('simon.sequence'),
 
   playSequence: task(function * () {
     // Wait some milliseconds before to start the new sequence
-    yield timeout(1000);
+    yield timeout(500);
     let index = 0;
     let endsAt = this.get('sequence.length') - 1;
     let animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
@@ -33,6 +34,18 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    this.get('playSequence').perform();
+
+    if (this.get('sequence').length === 1) {
+      this.set('showIntro', true);
+    } else {
+      this.set('showIntro', false);
+      this.get('playSequence').perform();
+    }
+  },
+
+  actions: {
+    startSequence() {
+      this.get('playSequence').perform();
+    }
   }
 });

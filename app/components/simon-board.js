@@ -13,10 +13,12 @@ export default Component.extend(EKMixin, {
   animateMovement: task(function * (value) {
     let animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
 
+    Ember.$('body').addClass(`_${value}`);
     Ember.$(`#btn-${value}`)
       .addClass('simon-btn__active')
       .one(animationEnd, function() {
         Ember.$(`#btn-${value}`).removeClass('simon-btn__active');
+        Ember.$('body').removeClass(`_${value}`);
       });
     yield timeout(500);
     this.get('simon').checkMovement(value);
