@@ -1,6 +1,7 @@
 /*jshint loopfunc: true */
 import Ember from 'ember';
 import { task, timeout } from 'ember-concurrency';
+import { animate } from 'ember-simon/utils/animate';
 
 const { Component, inject: { service }, computed } = Ember;
 
@@ -15,20 +16,17 @@ export default Component.extend({
     yield timeout(500);
     let index = 0;
     let endsAt = this.get('sequence.length') - 1;
-    let animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+    let body = Ember.$('body');
 
     while (index <= endsAt) {
       let currentValue = this.get('sequence').objectAt(index);
       let animElement = Ember.$(`#btn-${currentValue}`);
 
-      Ember.$('body').addClass(`color-${currentValue}`);
-      animElement.addClass('simon-btn__active')
-        .one(animationEnd, () => {
-          animElement.removeClass('simon-btn__active');
-          Ember.$('body').removeClass(`color-${currentValue}`);
-        });
+      body.addClass(`color-${currentValue}`);
 
-      yield timeout(500);
+      yield animate(animElement, 'simon-btn__active');
+
+      body.removeClass(`color-${currentValue}`);
       index++;
     }
 

@@ -1,5 +1,6 @@
 import Ember from 'ember';
-import { task, timeout } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
+import { animate } from 'ember-simon/utils/animate';
 import { EKMixin, getCode, keyDown } from 'ember-keyboard';
 
 const { Component, inject: { service }, computed, observer } = Ember;
@@ -11,17 +12,14 @@ export default Component.extend(EKMixin, {
   gameOver: computed.alias('simon.isGameOver'),
 
   animateMovement: task(function * (value) {
-    let animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
     let animElement = Ember.$(`#btn-${value}`);
+    let body = Ember.$('body');
 
-    Ember.$('body').addClass(`color-${value}`);
-    animElement
-      .addClass('simon-btn__active')
-      .one(animationEnd, function() {
-        animElement.removeClass('simon-btn__active');
-        Ember.$('body').removeClass(`color-${value}`);
-      });
-    yield timeout(500);
+    body.addClass(`color-${value}`);
+
+    yield animate(animElement, 'simon-btn__active');
+
+    body.removeClass(`color-${value}`);
     this.get('simon').checkMovement(value);
   }).enqueue(),
 

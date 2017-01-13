@@ -1,6 +1,7 @@
 /*jshint loopfunc: true */
 import Ember from 'ember';
 import { task, timeout } from 'ember-concurrency';
+import { animate } from 'ember-simon/utils/animate';
 
 const { Component } = Ember;
 
@@ -12,30 +13,26 @@ export default Component.extend({
     yield timeout(300);
     let i = 0;
     let endsAt = this.get('steps').length - 1;
-    let animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
     let animElement = Ember.$('.steps');
 
     while(i <= endsAt) {
       let currentValue = this.get('steps').objectAt(i);
       this.set('value', currentValue);
 
-      animElement.removeClass('hide').addClass('zoomInDown')
-        .one(animationEnd, () => {
-          animElement.removeClass('zoomInDown');
-          if (i < endsAt) {
-            animElement.addClass('hide');
-          }
-        });
-      yield timeout(1300);
+      animElement.removeClass('hide');
+
+      yield animate(animElement, 'zoomInDown');
+
+      if (i < endsAt) {
+        animElement.addClass('hide');
+      }
+
       i++;
     }
 
-    animElement.addClass('bounceOut go')
-      .one(animationEnd, () => {
-        animElement.removeClass('zoomInDown bounceOut go').addClass('hide');
-      });
+    yield animate(animElement, 'bounceOut go');
 
-    yield timeout(600);
+    animElement.addClass('hide');
 
     this.get('onIntroEnds')();
   }).drop(),
